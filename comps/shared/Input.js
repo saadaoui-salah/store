@@ -23,3 +23,36 @@ export const Input = ({
     </div>
   );
 };
+
+export const SelectInput = ({
+  label,
+  item = "wilaya",
+  onChange,
+  className,
+  values,
+  value = 0,
+  KEY = "id",
+}) => {
+  return (
+    <div className={`${className} relative inline-block w-[200px]`}>
+      <label
+        className="block text-md text-gray-700 font-bold mb-2"
+        htmlFor="select"
+      >
+        {label}
+      </label>
+      <select
+        defaultValue={value}
+        onChange={(e) => onChange(e)}
+        id="select"
+        className="bg-transparent border w-full border-gray-300 rounded-md py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200"
+      >
+        {values.map((value, i) => (
+          <option key={i} value={value[KEY]}>
+            {value[item]}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};

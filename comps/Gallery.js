@@ -23,6 +23,7 @@ export const Gallery = ({ images }) => {
               <Image
                 key={i}
                 width={120}
+                alt="image product"
                 height={120}
                 src={MEDIA_URL + image?.replace("/media/", "")}
                 className="w-[60px] h-[60px] rounded-md cursor-pointer md:mb-2"
@@ -32,6 +33,7 @@ export const Gallery = ({ images }) => {
           })}
         </div>
         <Image
+          alt="image product"
           width={220}
           height={220}
           src={MEDIA_URL + bigImage?.replace("/media/", "")}

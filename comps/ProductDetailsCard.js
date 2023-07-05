@@ -1,20 +1,18 @@
 "use client";
 
-import { useAddProductToCart } from "@/roupi/cart";
-import { useProductInWishList } from "@/roupi/wish-list";
-import { Stars } from "@/components/Stars";
-import { SaveButton } from "@/components/shared/Buttons";
 import { MEDIA_URL } from "@/urls";
 import Image from "next/image";
 import { ShippingCard } from "./ShippingCard";
+import { useCreateOrder } from "@/roupi/order";
+import { CheckoutForm } from "./CheckoutForm";
 
 const ProductDescription = ({ description }) => {
   return (
-    <div className="py-10 text-gray-900 lg:col-span-2 lg:col-start-1 lg:pb-16 lg:pr-8 lg:pt-6">
+    <p className="py-10 text-gray-900 lg:col-span-2 lg:col-start-1 lg:pb-16 flex flex-col lg:pr-8 lg:pt-6">
       {/* <!-- Description and details --> */}
-      <p className="text-gray-900 font-bold mb-2">Description:</p>
-      <p>{description}</p>
-    </div>
+      <span className="text-gray-900 font-bold mb-2">Description:</span>
+      <span>{description}</span>
+    </p>
   );
 };
 
@@ -140,18 +138,15 @@ export const ProductChoices = ({ packs, packID, addPackID }) => {
 export const ProductDetailsCard = ({
   title,
   price,
-  stars,
-  starsCount,
   description,
   discount,
   id,
   shipping,
   packs,
 }) => {
-  if (!id) return <p>Loading</p>;
+  if (!id) return <p>Loading comp</p>;
   const acctualPrice = price - (discount * price) / 100;
-  const { handleAddToWishList, added } = useProductInWishList(id);
-  const { handleAddProductToCart, order, setOrder } = useAddProductToCart(id);
+  const { submit, setOrder, order } = useCreateOrder();
   return (
     <>
       <div className="block pt-16  md:px-6 w-[400px]">
@@ -160,38 +155,22 @@ export const ProductDetailsCard = ({
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
               {title}
             </h1>
-            <SaveButton saved={added} onClick={() => handleAddToWishList()} />
           </div>
 
           <div>
-            <p className="mt-4 tracking-tight flex text-gray-900">
-              <div className="flex text-3xl font-bold text-gray-900">
+            <div className="mt-4 tracking-tight flex text-gray-900">
+              <p className="flex text-3xl font-bold text-gray-900">
                 {discount ? acctualPrice.toFixed(2) : price}
-                <div className="text-3xl font-bold text-gray-900">DA</div>
-              </div>
+                <span className="text-3xl font-bold text-gray-900">DA</span>
+              </p>
               {discount ? (
-                <div className="px-2 text-xl self-end  line-through text-gray-500">
+                <p className="px-2 text-xl self-end  line-through text-gray-500">
                   {price} DA
-                </div>
+                </p>
               ) : (
                 ""
               )}
-            </p>
-            {starsCount > 0 ? (
-              <div className="mt-6">
-                <h3 className="sr-only">Reviews</h3>
-                <div className="flex items-center">
-                  <Stars num={stars} />
-                  <span className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                    {starsCount} review{starsCount > 1 && "s"}
-                  </span>
-                </div>
-              </div>
-            ) : (
-              <p className="text-gray-400 font-bold text-md mt-2">
-                Not rated yet
-              </p>
-            )}
+            </div>
           </div>
         </div>
         <ProductDescription description={description} />
@@ -218,13 +197,7 @@ export const ProductDetailsCard = ({
             }
           />
         </div>
-        <button
-          onClick={(e) => handleAddProductToCart(e, packs.length > 0)}
-          type="submit"
-          className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        >
-          Add to bag
-        </button>
+        <CheckoutForm submit={submit} hasPacks={packs.length > 0} />
       </form>
     </>
   );
