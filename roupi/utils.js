@@ -1,10 +1,13 @@
 import { URL as API_URL } from "@/urls";
+import {token} from "@/token"
+
 
 export const useGET = async (url, conf) => {
   const get = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "X-Comercify-Individual-Seller": token
     },
   };
   if (conf?.headers) get.headers = { ...get.headers, ...conf.headers };
@@ -40,6 +43,7 @@ export const usePOST = async (url, conf) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-Comercify-Individual-Seller": token
     },
     body: "",
   };
