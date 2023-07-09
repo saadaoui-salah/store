@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ShippingCard } from "./ShippingCard";
 import { useCreateOrder } from "@/roupi/order";
 import { CheckoutForm } from "./CheckoutForm";
+import { useState } from "react";
 
 const ProductDescription = ({ description }) => {
   return (
@@ -146,7 +147,7 @@ export const ProductDetailsCard = ({
 }) => {
   if (!id) return <p>Loading comp</p>;
   const acctualPrice = price - (discount * price) / 100;
-  const { submit, setOrder, order } = useCreateOrder();
+  const { submit, setOrder, order } = useCreateOrder(id);
   return (
     <>
       <div className="block pt-16  md:px-6 w-[400px]">
@@ -157,7 +158,7 @@ export const ProductDetailsCard = ({
             </h1>
           </div>
 
-          <div>
+          <div className="flex justify-between">
             <div className="mt-4 tracking-tight flex text-gray-900">
               <p className="flex text-3xl font-bold text-gray-900">
                 {discount ? acctualPrice.toFixed(2) : price}
@@ -170,6 +171,31 @@ export const ProductDetailsCard = ({
               ) : (
                 ""
               )}
+            </div>
+            <div className="flex items-center mt-4 border shadow-sm rounded-md max-w-[138px]">
+              <button
+                onClick={() =>
+                  setOrder((prev) => ({
+                    ...prev,
+                    quantity: prev.quantity === 1 ? 1 : prev.quantity - 1,
+                  }))
+                }
+                className="px-4 border rounded-md font-bold text-2xl bg-gray-50"
+              >
+                -
+              </button>
+              <p className="text-2xl font-bold mx-4 ">{order.quantity}</p>
+              <button
+                onClick={() =>
+                  setOrder((prev) => ({
+                    ...prev,
+                    quantity: prev.quantity + 1,
+                  }))
+                }
+                className="px-4 border rounded-md font-bold text-2xl bg-gray-50"
+              >
+                +
+              </button>
             </div>
           </div>
         </div>
