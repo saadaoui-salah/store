@@ -21,7 +21,6 @@ const TruckIcon = () => {
 
 export const ShippingCard = ({ shipping, addShipping, shippingValue }) => {
   const handleOnChange = (v) => {
-    console.log(v);
     addShipping(v);
   };
   return (
