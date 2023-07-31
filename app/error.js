@@ -2,7 +2,6 @@
 import Link from "next/link";
 
 export default function CustomError({ error, reset }) {
-  console.log(error.message);
   return (
     <section className="w-full bg-blue-50 flex flex-col items-center h-[82.6vh] justify-center">
       <h1 className="text-3xl text-red-500 font-semibold mb-4">

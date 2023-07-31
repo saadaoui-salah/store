@@ -1,5 +1,7 @@
+import { AppBanner, Footer, Nav } from "@/comps";
+import { ContextProvider } from "@/context/contextProvider";
 import { Inter } from "next/font/google";
-import { Nav, Footer, AppBanner } from "@/comps";
+import "./global.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,11 +16,13 @@ export default function RootLayout({ children }) {
       <head>
         <script src="https://cdn.tailwindcss.com" async></script>
       </head>
-      <body className={inter.className}>
-        <AppBanner />
-        <Nav />
-        <main className="min-h-[82.6vh]"> {children}</main>
-        <Footer />
+      <body className="bg-white">
+        <ContextProvider>
+          <AppBanner />
+          <Nav />
+          <main className="min-h-[82.6vh]"> {children}</main>
+          <Footer />
+        </ContextProvider>
       </body>
     </html>
   );
