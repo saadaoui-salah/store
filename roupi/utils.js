@@ -6,7 +6,7 @@ export const useGET = async (url, conf) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "X-Comercify-Owner": token,
+      //"X-Comercify-Owner": token,
       "X-Comercify-Visitor": localStorage.getItem("trackID"),
     },
   };
@@ -43,7 +43,7 @@ export const usePOST = async (url, conf) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Comercify-Owner": token,
+      //"X-Comercify-Owner": token,
       "X-Comercify-Visitor": localStorage.getItem("trackID"),
     },
     body: "",
